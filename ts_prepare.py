@@ -11,7 +11,7 @@ import requests
 import os
 from datetime import timedelta, datetime as dt
 
-from acquire_walkthrough import get_store_data
+from ts_acquire import get_store_data
 
 # Function for numeric distributions
 
@@ -22,7 +22,7 @@ def numeric_hists(df, bins=20):
     display histograms for each numeric column
     """
     num_df = df.select_dtypes(include=np.number)
-    num_df.hist(bins=bins, color='thistle')
+    num_df.hist(bins=bins, color='thistle', ec='black')
     plt.suptitle('Numeric Column Distributions')
     plt.show()
 
