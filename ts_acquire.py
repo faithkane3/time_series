@@ -71,7 +71,7 @@ def get_df_params(name):
     
     return df
 
-########################### big_df function without DateTimeIndex ######################################
+########################### big_df function  ######################################
 
 def get_store_data():
     """
@@ -108,49 +108,8 @@ def get_store_data():
         df.to_csv('big_df.csv')
         return df
 
-########################### big_df function with DateTimeIndex #########################################
-
-def get_store_data_dti():
-    """
-    This function checks for csv files
-    for items, sales, stores, and big_df 
-    if there are none, it creates them.
-    It returns one big_df of merged dfs
-    with sale_date as a DateTimeIndex.
-    """
-    # check for csv files or create them
-    if os.path.isfile('items.csv'):
-        items_df = pd.read_csv('items.csv', index_col=0)
-    else:
-        items_df = get_df('items')
-        
-    if os.path.isfile('stores.csv'):
-        stores_df = pd.read_csv('stores.csv', index_col=0)
-    else:
-        stores_df = get_df('stores')
-        
-    if os.path.isfile('sales.csv'):
-        sales_df = pd.read_csv('sales.csv', index_col=0)
-    else:
-        sales_df = get_df('sales')
-        
-    if os.path.isfile('big_df_dti.csv'):
-        df = pd.read_csv('big_df_dti.csv', parse_dates=True, index_col='sale_date')
-        return df
-    else:
-        # merge all of the DataFrames into one
-        df = pd.merge(sales_df, stores_df, left_on='store', right_on='store_id').drop(columns={'store'})
-        df = pd.merge(df, items_df, left_on='item', right_on='item_id').drop(columns={'item'})
-
-        # convert sale_date to DateTime Index
-        df['sale_date'] = pd.to_datetime(df.sale_date)
-        df = df.set_index('sale_date').sort_index()
-
-        # write merged DateTime df with all data to directory for future use
-        df.to_csv('big_df_dti.csv')
-        return df
     
-############################## opsd energy function without DataTimeIndex #############################
+############################## opsd energy function  #############################
 
 def opsd_germany_daily():
     """
@@ -163,19 +122,4 @@ def opsd_germany_daily():
         url = 'https://raw.githubusercontent.com/jenfly/opsd/master/opsd_germany_daily.csv'
         df = pd.read_csv(url)
         df.to_csv('opsd_germany_daily.csv')
-    return df
-
-############################## opsd energy function with DataTimeIndex ################################
-
-def opsd_germany_daily_dti():
-    """
-    This function uses or creates the 
-    opsd_germany_daily csv and returns a df with DataTimeIndex.
-    """
-    if os.path.isfile('opsd_germany_daily_dti.csv'):
-        df = pd.read_csv('opsd_germany_daily_dti.csv', parse_dates=True, index_col=0)
-    else:
-        url = 'https://raw.githubusercontent.com/jenfly/opsd/master/opsd_germany_daily.csv'
-        df = pd.read_csv(url, parse_dates=True).set_index('Date').sort_index()
-        df.to_csv('opsd_germany_daily_dti.csv')
     return df
