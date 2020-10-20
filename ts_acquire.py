@@ -8,7 +8,7 @@ import requests
 def get_df(name):
     """
     This function takes in the string
-    '/items', '/stores', or '/sales' and
+    'items', 'stores', or 'sales' and
     returns a df containing all pages and
     creates a .csv file for future use.
     """

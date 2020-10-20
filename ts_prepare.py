@@ -13,6 +13,22 @@ from datetime import timedelta, datetime as dt
 
 from ts_acquire import get_store_data
 
+############################ Plot Distributions for a Column ##################################
+
+def hist_plot(df, col, unit_label='', bins=10):
+    """
+    This function takes in a DataFrame, 
+    a string for column name or list,
+    a string for unit label, default empty,
+    and an integer for number of bins, default 10, and
+    displays the distribution of the column.
+    """
+    plt.hist(df[col], bins=bins, color='thistle', ec='black')
+    plt.title('Distribution of ' + col)
+    plt.xlabel(unit_label)
+    plt.ylabel('Count')
+    plt.show()
+
 ############################# Function for numeric distributions #################################
 
 def numeric_hists(df, bins=20):
@@ -28,7 +44,7 @@ def numeric_hists(df, bins=20):
 
 ######################## Function to acquire df and prep store data ####################
 
-def preppeed_store_df():
+def prepped_store_df():
     """
     Function to acquire and prepare
     store dataframe and show
