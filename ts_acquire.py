@@ -59,7 +59,7 @@ def get_store_data():
         sales_df = get_df('sales')
         
     if os.path.isfile('big_df.csv'):
-        df = pd.read_csv('big_df.csv', parse_dates=True, index_col='sale_date')
+        df = pd.read_csv('big_df.csv', index_col=0)
         return df
     else:
         # merge all of the DataFrames into one
